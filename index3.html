@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="./js/sokoban.js" defer></script>
-    <title>Sokoban Lv1</title>
+    <script src="./js/sokobanlv3.js" defer></script>
+    <title>Sokoban Lv3</title>
 </head>
 <body>
     <select onchange="subjects(this.value)" name="levels" id="level-select">
         <option value="levels">--Please choose a level--</option>
-        <option id="lvOne" value="level_one">Level 2</option>
-        <option id="lvTwo" value="level_two">Level 3</option>
+        <option id="lvOne" value="level_one">Level 1</option>
+        <option id="lvTwo" value="level_two">Level 2</option>
     </select>
     <a id="buttonGoTo" href=""></a>
-    <h1>Level 1</h1>
+    <h1>Level 3</h1>
     <canvas id="mycanvas" width="1000px" height="1000px"></canvas>
     <script>
         $(document).ready(function() {
@@ -25,9 +25,9 @@
                 $("#goTo").remove();
     
                 if (selectedLevel === "level_one") {
-                    $("#buttonGoTo").append("<a id='goTo' href='./index2.html'>Go to Level</a>")
+                    $("#buttonGoTo").append("<a id='goTo' href='./index.html'>Go to Level</a>")
                 } else if (selectedLevel === "level_two") {
-                    $("#buttonGoTo").append("<a id='goTo' href='./index3.html'>Go to Level</a>")
+                    $("#buttonGoTo").append("<a id='goTo' href='./index2.html'>Go to Level</a>")
                 }
             }
             $("#level-select").on("change", handleLevelChange);
