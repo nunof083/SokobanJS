@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./images/Ori.png">
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="./js/sokoban.js" defer></script>
     <title>Sokoban Lv1</title>
 </head>
 <body>
-    <select onchange="subjects(this.value)" name="levels" id="level-select">
-        <option value="levels">--Please choose a level--</option>
-        <option id="lvOne" value="level_one">Level 2</option>
-        <option id="lvTwo" value="level_two">Level 3</option>
-    </select>
-    <a id="buttonGoTo" href=""></a>
-    <h1>Level 1</h1>
-    <canvas id="mycanvas" width="1000px" height="1000px"></canvas>
+    <img class="oribackground" src="./images/7cd8faf1-0c1c-4fde-9748-c2541943259b.png" alt="">
+    <div class="select">
+        <select onchange="subjects(this.value)" name="levels" id="level-select">
+            <option value="levels">--Please choose a level--</option>
+            <option id="lvOne" value="level_one">Level 2</option>
+            <option id="lvTwo" value="level_two">Level 3</option>
+        </select>
+        <a id="buttonGoTo" href=""></a>
+        <h1>Level 1</h1>
+    </div>
+    <div class="game">
+        <canvas id="mycanvas" width="800px" height="600px"></canvas>
+    </div>
+    <button class="reset" onclick="restartGame()">Reset</button>
     <script>
         $(document).ready(function() {
             function handleLevelChange() {

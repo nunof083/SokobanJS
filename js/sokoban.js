@@ -5,6 +5,9 @@ var ctx = c.getContext("2d");
 var posX = 0;
 var posY = 0;
 var playerState = '0';
+
+var boxSound = new Audio('./audios/mixkit-explainer-video-game-alert-sweep-236.wav')
+var winSound = new Audio('./audios/mixkit-game-level-completed-2059.wav')
     
 
 // map
@@ -15,8 +18,8 @@ var mapArray =
     ["1", "2", "*", "3", "0", "0", "1", "0",],
     ["1", "1", "1", "0", "3", "2", "1", "0",],
     ["1", "2", "1", "1", "3", "0", "1", "0",],
-    ["1", "0", "1", "0", "2", "0", "1", "1",],
-    ["1", "3", "0", "3", "3", '3', "2", "1",],
+    ["1", "0", "1", "2", "0", "0", "1", "1",],
+    ["1", "3", "0", "0", "3", '3', "2", "1",],
     ["1", "0", "0", "0", "2", "0", "0", "1",],
     ["1", "1", "1", "1", "1", "1", "1", "1",]
 ];
@@ -36,29 +39,29 @@ var BOX = "3";
 var boxOnPoint = "4";
 var PLAYER = "*"
 
+function restartGame() {
+    location.reload()
+}
+
+
 //function that makes the map
 function makeMap() {
     ctx.clearRect(0, 0, c.width, c.height);
-    var yellow = "#FFFF00";
-    var gray = "#808080";
-    var orange = "#FFA500";
     posX = 0;
     posY = 0;
 
     for (var i = 0; i < mapArray.length; i++) {
         for (var j = 0; j < mapArray[i].length; j++) {
             if (mapArray[i][j] == '*') {
-                drawImage('./images/char.ico', posX, posY)
+                drawImage('./images/ori.png', posX, posY)
             } else if (mapArray[i][j] === '0') {
-                makeSquare(posX, posY, yellow)
+                drawImage('./images/empty.PNG', posX, posY)
             } else if (mapArray[i][j] === '1') {
-                makeSquare(posX, posY, gray)
+                drawImage('./images/wall.PNG', posX, posY)
             } else if (mapArray[i][j] === '2') {
-                makeSquare(posX, posY, orange)
+                drawImage('./images/1200px-Eo_circle_red_blank.svg.png', posX, posY)
             } else if (mapArray[i][j] === '3') {
-                drawImage('./images/box.png', posX, posY);
-            } else if (mapArray[i][j] === '4') {
-                drawImage('./images/boxonpoint.png', posX, posY);
+                drawImage('./images/box.PNG', posX, posY)
             }
             posX += 32;
         }
@@ -77,7 +80,7 @@ function drawImage(imageUrl, x, y) {
 }
 
 //function to draw squares
-function makeSquare(posX, posY, colour) {
+/*function makeSquare(posX, posY, colour) {
     ctx.beginPath();
     ctx.rect(posX, posY, 32, 32);
     ctx.closePath();
@@ -85,7 +88,7 @@ function makeSquare(posX, posY, colour) {
     ctx.stroke();
     ctx.fillStyle = colour;
     ctx.fill();
-}
+}*/
 
 function findPlayerCords() {
     const y = mapArray.findIndex((row) => row.includes('*'));
@@ -148,6 +151,7 @@ function keys(e) {
 
             if (nextNextCellAbove === '0' || nextNextCellAbove === '2' || nextNextCellAbove === '4') {
                 mapArray[playerCordsY - 2][playerCordsX] = '3';
+                boxSound.play();
                 mapArray[playerCordsY - 1][playerCordsX] = '*';
                 boxMoved = true;
             } else if (nextNextCellAbove === '1') {
@@ -165,6 +169,7 @@ function keys(e) {
 
             if (nextNextCellLeft === '0' || nextNextCellLeft === '2' || nextNextCellLeft === '4') {
                 mapArray[playerCordsY][playerCordsX - 2] = '3';
+                boxSound.play();
                 mapArray[playerCordsY][playerCordsX - 1] = '*';
                 boxMoved = true;
             } else if (nextNextCellLeft === '1') {
@@ -182,6 +187,7 @@ function keys(e) {
 
             if (nextNextCellBelow === '0' || nextNextCellBelow === '2' || nextNextCellBelow === '4') {
                 mapArray[playerCordsY + 2][playerCordsX] = '3';
+                boxSound.play();
                 mapArray[playerCordsY + 1][playerCordsX] = '*';
                 boxMoved = true;
             } else if (nextNextCellBelow === '1') {
@@ -199,6 +205,7 @@ function keys(e) {
 
             if (nextNextCellRight === '0' || nextNextCellRight === '2' || nextNextCellRight === '4') {
                 mapArray[playerCordsY][playerCordsX + 2] = '3';
+                boxSound.play();
                 mapArray[playerCordsY][playerCordsX + 1] = '*';
                 boxMoved = true;
             } else if (nextNextCellRight === '1') {
@@ -211,11 +218,9 @@ function keys(e) {
     }
 
     if (boxMoved) {
-        console.log("Box moved");
-        
         mapArray[playerCordsY][playerCordsX] = '0';
-
         if (isGameOver()) {
+            winSound.play();
             alert("Congratulations! You completed the level.");
         }
         
